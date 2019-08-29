@@ -17,7 +17,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onClickToGallery(View view) {
-        Intent modelViewIntent = new Intent(this, PreviewModelActivity.class);
+        Intent modelViewIntent = new Intent(this, GalleryScrolling.class);
         startActivityForResult(modelViewIntent, 0);
     }
 }
