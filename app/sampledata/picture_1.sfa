@@ -1,0 +1,127 @@
+{
+  animations: [
+    {
+      path: 'sampledata/picture_1.fbx',
+    },
+  ],
+  materials: [
+    {
+      name: 'art',
+      parameters: [
+        {
+          baseColor: [
+            1,
+            1,
+            1,
+            1,
+          ],
+        },
+        {
+          baseColorMap: 'picture_d',
+        },
+        {
+          normalMap: 'picture_n',
+        },
+        {
+          interpolatedColor: null,
+        },
+        {
+          metallic: 0,
+        },
+        {
+          metallicMap: null,
+        },
+        {
+          roughness: 1,
+        },
+        {
+          roughnessMap: null,
+        },
+        {
+          opacity: null,
+        },
+      ],
+      source: 'build/sceneform_sdk/default_materials/fbx_material.sfm',
+    },
+    {
+      name: 'picture',
+      parameters: [
+        {
+          baseColor: [
+            1,
+            1,
+            1,
+            1,
+          ],
+        },
+        {
+          baseColorMap: 'picture_art_d',
+        },
+        {
+          normalMap: 'picture_art_n',
+        },
+        {
+          interpolatedColor: null,
+        },
+        {
+          metallic: 0,
+        },
+        {
+          metallicMap: null,
+        },
+        {
+          roughness: 1,
+        },
+        {
+          roughnessMap: null,
+        },
+        {
+          opacity: null,
+        },
+      ],
+      source: 'build/sceneform_sdk/default_materials/fbx_material.sfm',
+    },
+  ],
+  model: {
+    attributes: [
+      'Position',
+      'TexCoord',
+      'Orientation',
+      'BoneIndices',
+      'BoneWeights',
+    ],
+    collision: {},
+    file: 'sampledata/picture_1.fbx',
+    name: 'picture_1',
+    recenter: 'root',
+  },
+  samplers: [
+    {
+      file: 'sampledata\\picture_art_n.jpg',
+      name: 'picture_art_n',
+      params: {
+        usage_type: 'Normal',
+      },
+      pipeline_name: 'app/sampledata/picture_art_n.jpg',
+    },
+    {
+      file: 'sampledata\\picture_d.png',
+      name: 'picture_d',
+      pipeline_name: 'app/sampledata/picture_d.png',
+    },
+    {
+      file: 'sampledata\\picture_art_d.jpg',
+      name: 'picture_art_d',
+      pipeline_name: 'app/sampledata/picture_art_d.jpg',
+    },
+    {
+      file: 'sampledata\\picture_n.png',
+      name: 'picture_n',
+      params: {
+        usage_type: 'Normal',
+      },
+      pipeline_name: 'app/sampledata/picture_n.png',
+    },
+  ],
+  version: '0.54:2',
+}

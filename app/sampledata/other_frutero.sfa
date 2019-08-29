@@ -1,0 +1,114 @@
+{
+  animations: [
+    {
+      path: 'sampledata/other_frutero.fbx',
+    },
+  ],
+  materials: [
+    {
+      name: 'PlateWithFruit_glass',
+      parameters: [
+        {
+          baseColor: [
+            1,
+            1,
+            1,
+            1,
+          ],
+        },
+        {
+          baseColorMap: 'frutero_d',
+        },
+        {
+          normalMap: 'frutero_n',
+        },
+        {
+          interpolatedColor: null,
+        },
+        {
+          metallic: 0,
+        },
+        {
+          metallicMap: null,
+        },
+        {
+          roughness: 1,
+        },
+        {
+          roughnessMap: null,
+        },
+        {
+          opacity: null,
+        },
+      ],
+      source: 'build/sceneform_sdk/default_materials/fbx_material.sfm',
+    },
+    {
+      name: 'PlateWithFruit_base',
+      parameters: [
+        {
+          baseColor: [
+            1,
+            1,
+            1,
+            1,
+          ],
+        },
+        {
+          baseColorMap: 'frutero_d',
+        },
+        {
+          normalMap: 'frutero_n',
+        },
+        {
+          interpolatedColor: null,
+        },
+        {
+          metallic: 0,
+        },
+        {
+          metallicMap: null,
+        },
+        {
+          roughness: 1,
+        },
+        {
+          roughnessMap: null,
+        },
+        {
+          opacity: null,
+        },
+      ],
+      source: 'build/sceneform_sdk/default_materials/fbx_material.sfm',
+    },
+  ],
+  model: {
+    attributes: [
+      'Position',
+      'TexCoord',
+      'Orientation',
+      'BoneIndices',
+      'BoneWeights',
+    ],
+    collision: {},
+    file: 'sampledata/other_frutero.fbx',
+    name: 'other_frutero',
+    recenter: 'root',
+  },
+  samplers: [
+    {
+      file: 'sampledata\\frutero_d.png',
+      name: 'frutero_d',
+      pipeline_name: 'app/sampledata/frutero_d.png',
+    },
+    {
+      file: 'sampledata\\frutero_n.png',
+      name: 'frutero_n',
+      params: {
+        usage_type: 'Normal',
+      },
+      pipeline_name: 'app/sampledata/frutero_n.png',
+    },
+  ],
+  version: '0.54:2',
+}

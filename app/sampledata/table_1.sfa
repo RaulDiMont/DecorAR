@@ -1,0 +1,76 @@
+{
+  animations: [
+    {
+      path: 'sampledata/table_1.fbx',
+    },
+  ],
+  materials: [
+    {
+      name: 'ClassicRoundTable1',
+      parameters: [
+        {
+          baseColor: [
+            1,
+            1,
+            1,
+            1,
+          ],
+        },
+        {
+          baseColorMap: 'table_text_d',
+        },
+        {
+          normalMap: 'table_text_n',
+        },
+        {
+          interpolatedColor: null,
+        },
+        {
+          metallic: 0,
+        },
+        {
+          metallicMap: null,
+        },
+        {
+          roughness: 1,
+        },
+        {
+          roughnessMap: null,
+        },
+        {
+          opacity: null,
+        },
+      ],
+      source: 'build/sceneform_sdk/default_materials/fbx_material.sfm',
+    },
+  ],
+  model: {
+    attributes: [
+      'Position',
+      'TexCoord',
+      'Orientation',
+      'BoneIndices',
+      'BoneWeights',
+    ],
+    collision: {},
+    file: 'sampledata/table_1.fbx',
+    name: 'table_1',
+    recenter: 'root',
+  },
+  samplers: [
+    {
+      file: 'sampledata\\table_text_d.png',
+      name: 'table_text_d',
+      pipeline_name: 'app/sampledata/models/table_text_d.png',
+    },
+    {
+      file: 'sampledata\\table_text_n.png',
+      name: 'table_text_n',
+      params: {
+        usage_type: 'Normal',
+      },
+      pipeline_name: 'app/sampledata/models/table_text_n.png',
+    },
+  ],
+  version: '0.54:2',
+}

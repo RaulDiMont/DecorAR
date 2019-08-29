@@ -1,0 +1,35 @@
+[
+  {
+    "filePath": "chair_1.sfb",
+    "iconPath":"drawable/chair_thumb.png",
+    "nombre": "Silla de comedor",
+    "escalable": "No",
+    "tipo": "Silla",
+    "superficie": "Suelo"
+  },
+  {
+    "filePath": "table_1.sfb",
+    "iconPath":"drawable/roundtable_thumb.png",
+    "nombre": "Mesa de comedor",
+    "escalable": "No",
+    "tipo": "Mesa",
+    "superficie": "Suelo"
+  },
+  {
+    "filePath": "picture_1.sfb",
+    "iconPath":"drawable/picture_thumb.png",
+    "nombre": "Cuadro cutrecillo",
+    "escalable": "Si",
+    "tipo": "Decoración de pared",
+    "superficie": "Pared"
+  },
+  {
+    "filePath": "other_frutero.sfb",
+    "iconPath":"drawable/fruits_thumb.png",
+    "nombre": "Frutero",
+    "escalable": "No",
+    "tipo": "Otros",
+    "superficie": "Suelo"
+  }
+
+]

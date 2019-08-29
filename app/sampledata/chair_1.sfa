@@ -1,0 +1,76 @@
+{
+  animations: [
+    {
+      path: 'sampledata/chair_1.fbx',
+    },
+  ],
+  materials: [
+    {
+      name: 'ClassicKitchenChair2',
+      parameters: [
+        {
+          baseColor: [
+            1,
+            1,
+            1,
+            1,
+          ],
+        },
+        {
+          baseColorMap: 'chair_text_d',
+        },
+        {
+          normalMap: 'chair_text_n',
+        },
+        {
+          interpolatedColor: null,
+        },
+        {
+          metallic: 0,
+        },
+        {
+          metallicMap: null,
+        },
+        {
+          roughness: 1,
+        },
+        {
+          roughnessMap: null,
+        },
+        {
+          opacity: null,
+        },
+      ],
+      source: 'build/sceneform_sdk/default_materials/fbx_material.sfm',
+    },
+  ],
+  model: {
+    attributes: [
+      'Position',
+      'TexCoord',
+      'Orientation',
+      'BoneIndices',
+      'BoneWeights',
+    ],
+    collision: {},
+    file: 'sampledata/chair_1.fbx',
+    name: 'chair_1',
+    recenter: 'root',
+  },
+  samplers: [
+    {
+      file: 'sampledata\\chair_text_d.png',
+      name: 'chair_text_d',
+      pipeline_name: 'app/sampledata/chair_text_d.png',
+    },
+    {
+      file: 'sampledata\\chair_text_n.png',
+      name: 'chair_text_n',
+      params: {
+        usage_type: 'Normal',
+      },
+      pipeline_name: 'app/sampledata/chair_text_n.png',
+    },
+  ],
+  version: '0.54:2',
+}
