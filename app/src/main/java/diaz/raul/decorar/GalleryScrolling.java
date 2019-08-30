@@ -16,8 +16,9 @@ import java.util.Arrays;
 import java.util.List;
 
 public class GalleryScrolling extends AppCompatActivity {
-    private RecyclerView galleryView;
+    private RecyclerView galleryRecycler;
     private GalleryListAdapter adapter;
+
 
 
     @Override
@@ -28,15 +29,17 @@ public class GalleryScrolling extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getWindow().setStatusBarColor(Color.TRANSPARENT);
 
-        galleryView = findViewById(R.id.galleryView);
+        galleryRecycler = findViewById(R.id.galleryRecyclerView);
 
         String[] array = getResources().getStringArray(R.array.gallery_list);
         List<String> galleryList = Arrays.asList(array);
 
 
-        galleryView.setLayoutManager(new LinearLayoutManager(this));
+        galleryRecycler.setLayoutManager(new LinearLayoutManager(this));
         adapter = new GalleryListAdapter(this, galleryList);
-        galleryView.setAdapter(adapter);
+        galleryRecycler.setAdapter(adapter);
+
+
 
 
         FloatingActionButton fab = findViewById(R.id.fab);

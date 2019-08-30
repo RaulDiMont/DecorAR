@@ -1,5 +1,7 @@
 package diaz.raul.decorar;
 
+import android.content.Context;
+import android.content.Intent;
 import android.view.View;
 import android.widget.TextView;
 
@@ -7,13 +9,33 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class GalleryListViewHolder extends RecyclerView.ViewHolder {
     private TextView galleryView;
+    private Context context;
 
-    public GalleryListViewHolder(View itemView) {
+    public GalleryListViewHolder(View itemView, Context context) {
         super(itemView);
         this.galleryView = itemView.findViewById(R.id.galleryTextView);
+        this.context = context;
+
+        itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Preguntem quin item del model està mostrant el ViewHolder
+                String modelType = galleryView.getText().toString();
+
+                // Aquí podem cridar directament un mètode de l'activitat.
+                onItemClick(modelType);
+            }
+        });
     }
 
     public void bind(String galleryItem) {
         galleryView.setText(galleryItem);
+    }
+
+    public void onItemClick(String modelType) {
+        Intent toSecondGalleryIntent = new Intent(context, SecondGalleryActivity.class);
+        toSecondGalleryIntent.putExtra("tipoModelo", modelType);
+        context.startActivity(toSecondGalleryIntent);
+
     }
 }

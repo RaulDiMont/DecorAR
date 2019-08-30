@@ -1,8 +1,15 @@
 package diaz.raul.decorar;
 
 public class Object {
-    private String filepath, nombre, escalable, tipo, superficie;
+    private String filePath, iconPath, nombre, escalable, tipo, superficie;
 
+    public String getFilepath() {
+        return filePath;
+    }
+
+    public String getIconpath() {
+        return iconPath;
+    }
     public String getNombre() {
         return nombre;
     }
@@ -15,4 +22,6 @@ public class Object {
     public String getSuperficie() {
         return superficie;
     }
+
+
 }
