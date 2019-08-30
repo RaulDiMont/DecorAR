@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="gallery_list">
+        <item>Mesas</item>
+        <item>Sillas</item>
+        <item>Lámparas</item>
+        <item>Decoración de pared</item>
+        <item>Señalizacion</item>
+        <item>Otros</item>
+    </string-array>
+</resources>
