@@ -64,20 +64,20 @@ public class SecondGalleryActivity extends AppCompatActivity {
         // de las URIs de las imagenes de los Objetos 3D
 
         //Creamos un arrayList ya que la clase List<E> no es inicializable si darle valores
-        List<String> imageList = new ArrayList<String>();
+        List<Object> selectedObjects = new ArrayList<Object>();
 
         Iterator<Object> iterator = listaObjetos.iterator();
         while (iterator.hasNext()) {
             Object next = iterator.next();
             if (next.getTipo().equals(modelType))
-                imageList.add(next.getIconpath());
+                selectedObjects.add(next);
         }
 
         imageGalleryRecyclerView = findViewById(R.id.imageRecyclerView);
         imageGalleryRecyclerView.setLayoutManager(new GridLayoutManager(this, 3));
         imageGalleryRecyclerView.setHasFixedSize(true);
 
-        adapter = new SecondGalleryAdapter(this, imageList);
+        adapter = new SecondGalleryAdapter(this, selectedObjects);
         imageGalleryRecyclerView.setAdapter(adapter);
 
 

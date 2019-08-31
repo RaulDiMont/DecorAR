@@ -1,6 +1,8 @@
 package diaz.raul.decorar;
 
-public class Object {
+import java.io.Serializable;
+
+public class Object implements Serializable {
     private String filePath, iconPath, nombre, escalable, tipo, superficie;
 
     public String getFilepath() {
@@ -22,6 +24,4 @@ public class Object {
     public String getSuperficie() {
         return superficie;
     }
-
-
 }

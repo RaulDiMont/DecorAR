@@ -38,4 +38,5 @@
     GalleryScrollingGalleryScrollingGalleryScrollingGalleryScrollingGalleryScrollingGalleryScrollingGalleryScrolling
     GalleryScrollingGalleryScrollingGalleryScrollingGalleryScrollingGalleryScrolling</string>
     <string name="title_activity_second_gallery">SecondGalleryActivity</string>
+    <string name="title_activity_preview_model">PreviewModelActivity</string>
 </resources>

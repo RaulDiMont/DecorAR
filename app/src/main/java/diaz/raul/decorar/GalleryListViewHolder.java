@@ -19,10 +19,8 @@ public class GalleryListViewHolder extends RecyclerView.ViewHolder {
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Preguntem quin item del model està mostrant el ViewHolder
+                //Obtenemos el tipo del objeto del ViewHolder
                 String modelType = galleryView.getText().toString();
-
-                // Aquí podem cridar directament un mètode de l'activitat.
                 onItemClick(modelType);
             }
         });

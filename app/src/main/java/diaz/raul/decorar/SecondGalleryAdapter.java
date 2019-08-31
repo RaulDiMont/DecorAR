@@ -14,11 +14,11 @@ import java.util.List;
 public class SecondGalleryAdapter extends RecyclerView.Adapter<SecondGalleryViewHolder> {
 
     Context context;
-    List<String> imageList;
+    List<Object> selectedObjects;
 
-    public SecondGalleryAdapter(Context context, List<String> imageList) {
+    public SecondGalleryAdapter(Context context, List<Object> selectedObjects) {
         this.context = context;
-        this.imageList = imageList;
+        this.selectedObjects = selectedObjects;
     }
 
     @Override
@@ -27,18 +27,18 @@ public class SecondGalleryAdapter extends RecyclerView.Adapter<SecondGalleryView
         View itemView = LayoutInflater.from(context)
                 .inflate(R.layout.image_gallery_item, parent, false);
 
-        return new SecondGalleryViewHolder(itemView);
+        return new SecondGalleryViewHolder(itemView, context);
 
     }
 
 
     @Override
     public void onBindViewHolder(@NonNull SecondGalleryViewHolder holder, int position) {
-        holder.bind(imageList.get(position), context);
+        holder.bind(selectedObjects.get(position), context);
     }
 
     @Override
     public int getItemCount() {
-        return imageList.size();
+        return selectedObjects.size();
     }
 }
