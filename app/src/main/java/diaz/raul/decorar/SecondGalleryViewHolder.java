@@ -10,6 +10,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 
+import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP;
+
 public class SecondGalleryViewHolder extends RecyclerView.ViewHolder {
 
     private ImageView imageItem;
@@ -19,7 +21,7 @@ public class SecondGalleryViewHolder extends RecyclerView.ViewHolder {
     public SecondGalleryViewHolder(View itemView, Context context) {
         super(itemView);
 
-        this.imageItem = (ImageView) itemView.findViewById(R.id.galleryImageView);
+        this.imageItem = itemView.findViewById(R.id.galleryImageView);
         this.context = context;
 
     }
@@ -39,9 +41,9 @@ public class SecondGalleryViewHolder extends RecyclerView.ViewHolder {
         imageItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Obtenemos el string del nombre del objeto seleccionado para enviarlo a la actividad
+                //Enviamos el objeto seleccionado a la actividad
                 //deseada con el onItemClick
-                String selectedName = selectedObject.getNombre();
+
                 onItemClick(selectedObject);
             }
         });
@@ -63,6 +65,7 @@ public class SecondGalleryViewHolder extends RecyclerView.ViewHolder {
 
     public void onItemClick(Object selectedObject) {
         Intent toMainIntent = new Intent(context, MainActivity.class);
+        toMainIntent.setFlags(FLAG_ACTIVITY_CLEAR_TOP);
         toMainIntent.putExtra("objeto_seleccionado", selectedObject);
         context.startActivity(toMainIntent);
     }

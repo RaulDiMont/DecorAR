@@ -27,6 +27,8 @@ public class GalleryScrolling extends AppCompatActivity {
         setContentView(R.layout.activity_gallery_scrolling);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         getWindow().setStatusBarColor(Color.TRANSPARENT);
 
         galleryRecycler = findViewById(R.id.galleryRecyclerView);
@@ -50,6 +52,6 @@ public class GalleryScrolling extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
     }
 }

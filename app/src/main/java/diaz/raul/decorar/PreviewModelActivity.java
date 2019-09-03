@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.ar.core.exceptions.CameraNotAvailableException;
@@ -19,6 +18,8 @@ import com.google.ar.sceneform.math.Quaternion;
 import com.google.ar.sceneform.math.Vector3;
 import com.google.ar.sceneform.rendering.ModelRenderable;
 
+import java.lang.ref.WeakReference;
+
 public class PreviewModelActivity extends AppCompatActivity implements Scene.OnUpdateListener {
 
     //Declaración de variables
@@ -29,6 +30,7 @@ public class PreviewModelActivity extends AppCompatActivity implements Scene.OnU
     private float vectorRotacion = 0;
     private Node previewNode = new Node();
     private Uri previewUri;
+    private ModelLoader modelLoader;
 
 
     @Override
@@ -42,6 +44,9 @@ public class PreviewModelActivity extends AppCompatActivity implements Scene.OnU
         //Obtenemos el objeto que se nos pasa desde la actividad Secondgallery
         Intent intent = getIntent();
         chosenObject = (Object) intent.getSerializableExtra("objeto_seleccionado");
+
+        //Obtenemos la URI del fichero .sfb del modelo que se mostrará en la escena
+        previewUri = Uri.parse(chosenObject.getFilepath());
 
         //Inicializamos las variables con las views e items del layout
         previewSceneView = findViewById(R.id.scene_view);
@@ -70,34 +75,15 @@ public class PreviewModelActivity extends AppCompatActivity implements Scene.OnU
                 break;
         }
 
-        //Renderizamos en objeto en la escena
-        previewUri = Uri.parse(chosenObject.getFilepath());
-        render3DModel(previewUri);
+        //Renderizamos en objeto en la escena creando un modelLoader y pasándole la Uri del .sfb
+        modelLoader = new ModelLoader(new WeakReference<>(this), null);
+        modelLoader.render3DModel(previewUri);
         nameTextView.setText(chosenObject.getNombre());
-    }
-
-    @Override
-    protected void onPause(){
-        super.onPause();
-        previewSceneView.pause();
-
-    }
-
-    @Override
-    protected void onResume(){
-        super.onResume();
-        try {
-            previewSceneView.resume();
-        } catch (CameraNotAvailableException e) {
-            e.printStackTrace();
-
-        }
     }
 
     //En el método setNodeOnScene creamos el nodo que utilizaremos para crear el renderizable
     //de nuestro modelo en la escena
-
-    private void setNodeOnScene(ModelRenderable model){
+    public void setNodeOnScene(ModelRenderable model) {
 
         previewNode.setParent(previewSceneView.getScene());
 
@@ -115,7 +101,7 @@ public class PreviewModelActivity extends AppCompatActivity implements Scene.OnU
                 break;
 
             case "picture_1.sfb":
-                previewNode.setLocalPosition(new Vector3(0f, -2.5f, -3.5f));
+                previewNode.setLocalPosition(new Vector3(0f, 0.0f, -3f));
                 previewNode.setLocalScale(new Vector3(2.7f, 2.7f, 2.7f));
                 previewNode.setLookDirection(Vector3.down());
                 break;
@@ -128,27 +114,7 @@ public class PreviewModelActivity extends AppCompatActivity implements Scene.OnU
 
     }
 
-    //El método render3DModel construye el renderizable que se mostrará en la escena
-    private void render3DModel(Uri uri) {
-        ModelRenderable.builder()
-                .setSource(this, uri)
-                .build()
-                .thenAccept(
-                        renderable -> setNodeOnScene(renderable)
-                )
-                .exceptionally((throwable -> {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                    builder.setMessage(throwable.getMessage())
-                            .setTitle("Error!");
-                    AlertDialog dialog = builder.create();
-                    dialog.show();
-                    return null;
-                }));
-
-    }
-
     //En el método onUpdate implementaremos la rotación del modelo en la escena
-
     @Override
     public void onUpdate(FrameTime frameTime) {
 
@@ -172,11 +138,29 @@ public class PreviewModelActivity extends AppCompatActivity implements Scene.OnU
         //
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        previewSceneView.pause();
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        try {
+            previewSceneView.resume();
+        } catch (CameraNotAvailableException e) {
+            e.printStackTrace();
+
+        }
+    }
+
     //En el método onOptionsItemSelected implementamos que el item añadido a la toolbar
     //vuelva exactamente a la anterior actividad tal y como quedó antes de pasar a la presente
     //Esto es necesario porque, si solo indicasemos en el manifest su parent activity, iniciaría
     //ésta en lugar de recuperarla
-    
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {

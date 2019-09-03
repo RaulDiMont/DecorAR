@@ -1,7 +1,7 @@
 [
   {
     "filePath": "chair_1.sfb",
-    "iconPath": "file:///android_asset/chair_thumb.png",
+    "iconPath": "file:///android_asset/chair_1.png",
     "nombre": "Silla de comedor",
     "escalable": "No",
     "tipo": "Sillas",
@@ -9,7 +9,7 @@
   },
   {
     "filePath": "table_1.sfb",
-    "iconPath": "file:///android_asset/roundtable_thumb.png",
+    "iconPath": "file:///android_asset/table_1.png",
     "nombre": "Mesa de comedor",
     "escalable": "No",
     "tipo": "Mesas",
@@ -17,7 +17,7 @@
   },
   {
     "filePath": "picture_1.sfb",
-    "iconPath": "file:///android_asset/picture_thumb.png",
+    "iconPath": "file:///android_asset/picture_1.png",
     "nombre": "Cuadro cutrecillo",
     "escalable": "Si",
     "tipo": "Decoración de pared",
@@ -25,7 +25,7 @@
   },
   {
     "filePath": "other_frutero.sfb",
-    "iconPath": "file:///android_asset/fruits_thumb.png",
+    "iconPath": "file:///android_asset/fruits_1.png",
     "nombre": "Frutero",
     "escalable": "No",
     "tipo": "Otros",
