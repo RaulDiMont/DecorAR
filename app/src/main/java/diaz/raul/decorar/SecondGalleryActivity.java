@@ -83,4 +83,5 @@ public class SecondGalleryActivity extends AppCompatActivity {
 
     }
 
+
 }

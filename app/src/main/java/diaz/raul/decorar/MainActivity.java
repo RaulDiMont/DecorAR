@@ -1,14 +1,17 @@
 package diaz.raul.decorar;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.ar.core.Anchor;
 import com.google.ar.core.HitResult;
@@ -20,6 +23,8 @@ import com.google.ar.sceneform.ux.ArFragment;
 import com.google.ar.sceneform.ux.TransformableNode;
 
 import java.lang.ref.WeakReference;
+import java.util.Arrays;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -29,12 +34,37 @@ public class MainActivity extends AppCompatActivity {
     private Uri previewUri;
     private Session arSession;
 
+    //Primera galería
+    private RecyclerView galleryRecycler;
+    private GalleryListAdapter adapter;
+    private View includeFragment;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        getWindow().setStatusBarColor(Color.TRANSPARENT);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+
+        //getWindow().setStatusBarColor(Color.TRANSPARENT);
+
+        includeFragment = findViewById(R.id.include_fragment);
+
+
+        //inicializamos galería
+        galleryRecycler = findViewById(R.id.galleryRecyclerView);
+
+        String[] array = getResources().getStringArray(R.array.gallery_list);
+        List<String> galleryList = Arrays.asList(array);
+
+        galleryRecycler.setLayoutManager(new LinearLayoutManager(this));
+        adapter = new GalleryListAdapter(this, galleryList);
+        galleryRecycler.setAdapter(adapter);
+        galleryRecycler.setVisibility(View.INVISIBLE);
+        galleryRecycler.setFocusable(false);
+        /////////////////////////
 
         //Obtenemos el objeto que se nos pasa desde la actividad Secondgallery
         Intent intent = getIntent();
@@ -75,7 +105,39 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onClickToGallery(View view) {
+        ////////////////////A LA GALERÍA EXTERNA
+        /*
         Intent modelViewIntent = new Intent(this, GalleryScrolling.class);
         startActivityForResult(modelViewIntent, 0);
+        */
+        ////////////////////////////////////////////////////////
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        galleryRecycler.setVisibility(View.VISIBLE);
+        galleryRecycler.setFocusable(true);
+        includeFragment.setVisibility(View.INVISIBLE);
+        includeFragment.setFocusable(false);
+
+
+
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                // todo: goto back activity from here
+                includeFragment.setVisibility(View.VISIBLE);
+                includeFragment.setFocusable(true);
+                galleryRecycler.setVisibility(View.INVISIBLE);
+                galleryRecycler.setFocusable(false);
+                getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+
 }
