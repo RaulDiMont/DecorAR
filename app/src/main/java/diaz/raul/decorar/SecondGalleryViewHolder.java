@@ -4,13 +4,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-
-import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP;
 
 public class SecondGalleryViewHolder extends RecyclerView.ViewHolder {
 
@@ -64,10 +63,17 @@ public class SecondGalleryViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void onItemClick(Object selectedObject) {
+        /*
         Intent toMainIntent = new Intent(context, MainActivity.class);
         toMainIntent.setFlags(FLAG_ACTIVITY_CLEAR_TOP);
         toMainIntent.putExtra("objeto_seleccionado", selectedObject);
         context.startActivity(toMainIntent);
+        */
+        Toast.makeText(context, "Ha elegido el objeto: " + selectedObject.getNombre(), Toast.LENGTH_LONG).show();
+        MainActivity main = (MainActivity) context;
+        main.setChosenObject(selectedObject);
+        main.toFragmentAR();
+
     }
 
     public void onItemLongClick(Object selectedObject) {

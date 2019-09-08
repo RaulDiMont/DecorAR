@@ -22,6 +22,10 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <include
+        android:id="@+id/include_gallery2"
+        layout="@layout/content_second_gallery" />
+
+    <include
         android:id="@+id/include_gallery1"
         layout="@layout/content_gallery_scrolling" />
 

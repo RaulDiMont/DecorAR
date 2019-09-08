@@ -20,8 +20,10 @@ public class GalleryListViewHolder extends RecyclerView.ViewHolder {
             @Override
             public void onClick(View v) {
                 //Obtenemos el tipo del objeto del ViewHolder
-                String modelType = galleryView.getText().toString();
-                onItemClick(modelType);
+                String objetosSeleccionados = galleryView.getText().toString();
+                MainActivity main = (MainActivity) context;
+                main.crearGaleria2(objetosSeleccionados);
+                main.toGallery2();
             }
         });
     }
