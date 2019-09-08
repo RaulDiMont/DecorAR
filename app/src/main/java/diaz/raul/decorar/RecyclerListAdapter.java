@@ -10,25 +10,25 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-public class Galeria1Adapter extends RecyclerView.Adapter<Galeria1ViewHolder> {
+public class RecyclerListAdapter extends RecyclerView.Adapter<RecyclerListViewHolder> {
     Context context;
     List<String> gallerylist;
 
-    public Galeria1Adapter(Context context, List<String> gallerylist) {
+    public RecyclerListAdapter(Context context, List<String> gallerylist) {
         this.context = context;
         this.gallerylist = gallerylist;
     }
 
     @NonNull
     @Override
-    public Galeria1ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public RecyclerListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(context)
                 .inflate(R.layout.item_galeria1, parent, false);
-        return new Galeria1ViewHolder(itemView, context);
+        return new RecyclerListViewHolder(itemView, context);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull Galeria1ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RecyclerListViewHolder holder, int position) {
         holder.bind(gallerylist.get(position));
     }
 

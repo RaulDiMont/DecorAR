@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
 
     //Primera galería
     private RecyclerView galleryRecycler;
-    private Galeria1Adapter adapter;
+    private RecyclerListAdapter adapter;
     private View includeFragment;
 
     //Segunda galeria
@@ -197,7 +197,7 @@ public class MainActivity extends AppCompatActivity {
         List<String> galleryList = Arrays.asList(array);
 
         galleryRecycler.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new Galeria1Adapter(this, galleryList);
+        adapter = new RecyclerListAdapter(this, galleryList);
         galleryRecycler.setAdapter(adapter);
         galleryRecycler.setVisibility(View.INVISIBLE);
         galleryRecycler.setFocusable(false);
@@ -248,8 +248,8 @@ public class MainActivity extends AppCompatActivity {
                 }
                 return true;
             case R.id.settings_menu_item:
-                Intent toSettingsIntent = new Intent(this, Galeria1Activity.class);
-                context.startActivity(toSettingsIntent);
+                Intent toSettingsIntent = new Intent(this, SettingsActivity.class);
+                this.startActivity(toSettingsIntent);
             default:
                 return super.onOptionsItemSelected(item);
         }

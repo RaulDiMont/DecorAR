@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="previewBackgroundColor">#FFD7A3</color>
     <color name="colorPrimary">#DFC28E</color>
-    <color name="colorPrimaryDark">#DFC28E</color>
-    <color name="colorPrimaryDark2">#A29271</color>
-    <color name="customColorPrimaryLight">#FFEBB4</color>
+    <color name="colorPrimaryDark">#A29271</color>
+    <color name="colorPrimaryLight">#FFEBCC</color>
     <color name="colorAccent">#19CFC2</color>
 </resources>

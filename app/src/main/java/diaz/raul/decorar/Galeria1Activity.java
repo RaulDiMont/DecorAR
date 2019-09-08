@@ -17,7 +17,7 @@ import java.util.List;
 
 public class Galeria1Activity extends AppCompatActivity {
     private RecyclerView galleryRecycler;
-    private Galeria1Adapter adapter;
+    private RecyclerListAdapter adapter;
 
 
 
@@ -38,7 +38,7 @@ public class Galeria1Activity extends AppCompatActivity {
 
 
         galleryRecycler.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new Galeria1Adapter(this, galleryList);
+        adapter = new RecyclerListAdapter(this, galleryList);
         galleryRecycler.setAdapter(adapter);
 
 
