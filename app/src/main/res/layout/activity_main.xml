@@ -4,34 +4,43 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     tools:context=".MainActivity">
 
+    <include
+        android:id="@+id/include_gallery2"
+        layout="@layout/content_galeria2" />
+
+    <include
+        android:id="@+id/include_gallery1"
+        layout="@layout/content_galeria1" />
+
+    <include
+        android:id="@+id/include_fragment"
+        layout="@layout/content_main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
     <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="30dp"
+        android:background="@android:color/transparent"
+        android:fitsSystemWindows="true"
+        android:visibility="visible">
+
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@color/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
+            app:layout_collapseMode="pin"
+            app:titleTextColor="#E6FFFFFF" />
 
 
     </com.google.android.material.appbar.AppBarLayout>
-
-    <include
-        android:id="@+id/include_gallery2"
-        layout="@layout/content_second_gallery" />
-
-    <include
-        android:id="@+id/include_gallery1"
-        layout="@layout/content_gallery_scrolling" />
-
-    <include
-        android:id="@+id/include_fragment"
-        layout="@layout/content_main" />
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

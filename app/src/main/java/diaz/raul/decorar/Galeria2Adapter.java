@@ -11,29 +11,29 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-public class SecondGalleryAdapter extends RecyclerView.Adapter<SecondGalleryViewHolder> {
+public class Galeria2Adapter extends RecyclerView.Adapter<Galeria2ViewHolder> {
 
     Context context;
     List<Object> selectedObjects;
 
-    public SecondGalleryAdapter(Context context, List<Object> selectedObjects) {
+    public Galeria2Adapter(Context context, List<Object> selectedObjects) {
         this.context = context;
         this.selectedObjects = selectedObjects;
     }
 
     @Override
-    public SecondGalleryViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public Galeria2ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         View itemView = LayoutInflater.from(context)
-                .inflate(R.layout.image_gallery_item, parent, false);
+                .inflate(R.layout.item_galeria2, parent, false);
 
-        return new SecondGalleryViewHolder(itemView, context);
+        return new Galeria2ViewHolder(itemView, context);
 
     }
 
 
     @Override
-    public void onBindViewHolder(@NonNull SecondGalleryViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull Galeria2ViewHolder holder, int position) {
         holder.bind(selectedObjects.get(position), context);
     }
 

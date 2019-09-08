@@ -29,7 +29,7 @@ public class Object implements Serializable {
     }
 
     //Obtenemos el tipo de objeto (Mesas, Sillas, Decoración de pared...etc), que se corresponderá
-    //con una de las categorías de la GalleryScrolling
+    //con una de las categorías de la Galeria 1
     public String getTipo() {
         return tipo;
     }

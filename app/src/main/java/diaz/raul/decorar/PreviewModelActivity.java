@@ -36,7 +36,7 @@ public class PreviewModelActivity extends AppCompatActivity implements Scene.OnU
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_preview_model);
+        setContentView(R.layout.activity_previewmodel);
 
         //Añadimos la función de back en la toolbar por comodidad
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

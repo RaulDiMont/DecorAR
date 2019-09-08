@@ -7,11 +7,11 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-public class GalleryListViewHolder extends RecyclerView.ViewHolder {
+public class Galeria1ViewHolder extends RecyclerView.ViewHolder {
     private TextView galleryView;
     private Context context;
 
-    public GalleryListViewHolder(View itemView, Context context) {
+    public Galeria1ViewHolder(View itemView, Context context) {
         super(itemView);
         this.galleryView = itemView.findViewById(R.id.galleryTextView);
         this.context = context;
@@ -21,9 +21,8 @@ public class GalleryListViewHolder extends RecyclerView.ViewHolder {
             public void onClick(View v) {
                 //Obtenemos el tipo del objeto del ViewHolder
                 String objetosSeleccionados = galleryView.getText().toString();
-                MainActivity main = (MainActivity) context;
-                main.crearGaleria2(objetosSeleccionados);
-                main.toGallery2();
+                onItemClick(objetosSeleccionados);
+
             }
         });
     }
@@ -32,10 +31,18 @@ public class GalleryListViewHolder extends RecyclerView.ViewHolder {
         galleryView.setText(galleryItem);
     }
 
-    public void onItemClick(String modelType) {
-        Intent toSecondGalleryIntent = new Intent(context, SecondGalleryActivity.class);
-        toSecondGalleryIntent.putExtra("tipoModelo", modelType);
-        context.startActivity(toSecondGalleryIntent);
+    public void onItemClick(String objetosSeleccionados) {
+
+        if (this.context instanceof MainActivity) {
+            MainActivity main = (MainActivity) context;
+            main.crearGaleria2(objetosSeleccionados);
+            main.toGallery2();
+        }
+        if (this.context instanceof Galeria1Activity) {
+            Intent toSecondGalleryIntent = new Intent(context, Galeria2Activity.class);
+            toSecondGalleryIntent.putExtra("tipoModelo", objetosSeleccionados);
+            context.startActivity(toSecondGalleryIntent);
+        }
 
     }
 }

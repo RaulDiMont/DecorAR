@@ -11,13 +11,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 
-public class SecondGalleryViewHolder extends RecyclerView.ViewHolder {
+public class Galeria2ViewHolder extends RecyclerView.ViewHolder {
 
     private ImageView imageItem;
     private Context context;
 
 
-    public SecondGalleryViewHolder(View itemView, Context context) {
+    public Galeria2ViewHolder(View itemView, Context context) {
         super(itemView);
 
         this.imageItem = itemView.findViewById(R.id.galleryImageView);
@@ -63,23 +63,25 @@ public class SecondGalleryViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void onItemClick(Object selectedObject) {
-        /*
-        Intent toMainIntent = new Intent(context, MainActivity.class);
-        toMainIntent.setFlags(FLAG_ACTIVITY_CLEAR_TOP);
-        toMainIntent.putExtra("objeto_seleccionado", selectedObject);
-        context.startActivity(toMainIntent);
-        */
-        Toast.makeText(context, "Ha elegido el objeto: " + selectedObject.getNombre(), Toast.LENGTH_LONG).show();
-        MainActivity main = (MainActivity) context;
-        main.setChosenObject(selectedObject);
-        main.toFragmentAR();
+
+        if (this.context instanceof MainActivity) {
+            Toast.makeText(context, "Ha elegido el objeto: " + selectedObject.getNombre(), Toast.LENGTH_LONG).show();
+            MainActivity main = (MainActivity) context;
+            main.setChosenObject(selectedObject);
+            main.toFragmentAR();
+        }
+        if (this.context instanceof Galeria2Activity) {
+            Intent topreviewModelIntent = new Intent(context, PreviewModelActivity.class);
+            topreviewModelIntent.putExtra("objeto_seleccionado", selectedObject);
+            context.startActivity(topreviewModelIntent);
+
+        }
+
 
     }
 
     public void onItemLongClick(Object selectedObject) {
 
-        Intent topreviewModelIntent = new Intent(context, PreviewModelActivity.class);
-        topreviewModelIntent.putExtra("objeto_seleccionado", selectedObject);
-        context.startActivity(topreviewModelIntent);
+
     }
 }

@@ -1,10 +1,16 @@
 package diaz.raul.decorar;
 
+import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -36,20 +42,22 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+    private Context context;
     private ArFragment fragment;
     private ModelLoader modelLoader;
     private Object chosenObject;
     private Uri previewUri;
     private Session arSession;
+    Toolbar toolbar;
 
     //Primera galería
     private RecyclerView galleryRecycler;
-    private GalleryListAdapter adapter;
+    private Galeria1Adapter adapter;
     private View includeFragment;
 
     //Segunda galeria
     private RecyclerView imageGalleryRecyclerView;
-    private SecondGalleryAdapter secondAdapter;
+    private Galeria2Adapter secondAdapter;
     private List<Object> listaObjetos;
 
     private Gson gson;
@@ -58,9 +66,16 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().requestFeature(Window.FEATURE_ACTION_BAR_OVERLAY);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar = findViewById(R.id.toolbar);
+
+
+
         setSupportActionBar(toolbar);
+        toolbar.setBackgroundColor(getColor(android.R.color.transparent));
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
         fromJSONtoList();
@@ -72,58 +87,6 @@ public class MainActivity extends AppCompatActivity {
         //getWindow().setStatusBarColor(Color.TRANSPARENT);
 
         includeFragment = findViewById(R.id.include_fragment);
-
-
-        //////////////////////////////inicializamos galería 1
-
-/*
-        galleryRecycler = findViewById(R.id.galleryRecyclerView);
-
-        String[] array = getResources().getStringArray(R.array.gallery_list);
-        List<String> galleryList = Arrays.asList(array);
-
-        galleryRecycler.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new GalleryListAdapter(this, galleryList);
-        galleryRecycler.setAdapter(adapter);
-        galleryRecycler.setVisibility(View.INVISIBLE);
-        galleryRecycler.setFocusable(false);
-        */
-        /////////////////////////
-
-        ///////////////////////////inicializamos galeria 2
-
-        ///Utilizamos Gson para crear Objects a partir del JSON
-
-
-/*
-
-        //Creamos un arrayList ya que la clase List<E> no es inicializable si darle valores
-        List<Object> selectedObjects = new ArrayList<Object>();
-
-        Iterator<Object> iterator = listaObjetos.iterator();
-        while (iterator.hasNext()) {
-            Object next = iterator.next();
-            if (next.getTipo().equals(modelType))
-                selectedObjects.add(next);
-        }
-
-        imageGalleryRecyclerView = findViewById(R.id.imageRecyclerView);
-        imageGalleryRecyclerView.setLayoutManager(new GridLayoutManager(this, 3));
-        imageGalleryRecyclerView.setHasFixedSize(true);
-
-        secondAdapter = new SecondGalleryAdapter(this, selectedObjects);
-        imageGalleryRecyclerView.setAdapter(secondAdapter);
-        imageGalleryRecyclerView.setVisibility(View.INVISIBLE);
-        imageGalleryRecyclerView.setFocusable(false);
-*/
-
-        /////////////////////////////////////////////////////////////////////
-/*
-
-        //Obtenemos el objeto que se nos pasa desde la actividad Secondgallery
-        Intent intent = getIntent();
-        chosenObject = (Object) intent.getSerializableExtra("objeto_seleccionado");
-*/
 
         //Asignamos a la variable fragment el "sceneform_fragment definido en el layout content_main
         fragment = (ArFragment)
@@ -161,35 +124,13 @@ public class MainActivity extends AppCompatActivity {
 
     public void onClickToGallery(View view) {
         toGallery1();
-        ////////////////////A LA GALERÍA EXTERNA
-        /*
-        Intent modelViewIntent = new Intent(this, GalleryScrolling.class);
-        startActivityForResult(modelViewIntent, 0);
-        */
-        ////////////////////////////////////////////////////////
-
-
-        /*
-        galleryRecycler.setVisibility(View.VISIBLE);
-        galleryRecycler.setFocusable(true);
-        includeFragment.setVisibility(View.INVISIBLE);
-        includeFragment.setFocusable(false);
-        */
-/*
-
-        imageGalleryRecyclerView.setVisibility(View.VISIBLE);
-        imageGalleryRecyclerView.setFocusable(true);
-        includeFragment.setVisibility(View.INVISIBLE);
-        includeFragment.setFocusable(false);
-*/
-
-
     }
 
     public void toGallery1() {
 
         //Flecha atrás de la toolbar
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toolbar.setBackgroundColor(getColor(R.color.colorPrimaryDark));
         //Galeria 1
         galleryRecycler.setVisibility(View.VISIBLE);
         galleryRecycler.setFocusable(true);
@@ -203,6 +144,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void toGallery2() {
+        toolbar.setBackgroundColor(getColor(R.color.colorPrimaryDark));
         //Galeria 1
         galleryRecycler.setVisibility(View.INVISIBLE);
         galleryRecycler.setFocusable(false);
@@ -216,6 +158,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void toFragmentAR() {
+
+        toolbar.setBackgroundColor(getColor(android.R.color.transparent));
         //Galeria 1
         galleryRecycler.setVisibility(View.INVISIBLE);
         galleryRecycler.setFocusable(false);
@@ -253,7 +197,7 @@ public class MainActivity extends AppCompatActivity {
         List<String> galleryList = Arrays.asList(array);
 
         galleryRecycler.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new GalleryListAdapter(this, galleryList);
+        adapter = new Galeria1Adapter(this, galleryList);
         galleryRecycler.setAdapter(adapter);
         galleryRecycler.setVisibility(View.INVISIBLE);
         galleryRecycler.setFocusable(false);
@@ -269,6 +213,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void crearGaleria2(String tipoObjeto) {
+
         //Creamos un arrayList ya que la clase List<E> no es inicializable si darle valores
 
         List<Object> objetosElegidos = new ArrayList<Object>();
@@ -279,8 +224,15 @@ public class MainActivity extends AppCompatActivity {
             if (next.getTipo().equals(tipoObjeto))
                 objetosElegidos.add(next);
         }
-        secondAdapter = new SecondGalleryAdapter(this, objetosElegidos);
+        secondAdapter = new Galeria2Adapter(this, objetosElegidos);
         imageGalleryRecyclerView.setAdapter(secondAdapter);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
     }
 
     @Override
@@ -294,16 +246,10 @@ public class MainActivity extends AppCompatActivity {
                     if (galleryRecycler.getVisibility() == View.VISIBLE)
                         toFragmentAR();
                 }
-/*
-
-                includeFragment.setVisibility(View.VISIBLE);
-                includeFragment.setFocusable(true);
-                galleryRecycler.setVisibility(View.INVISIBLE);
-                galleryRecycler.setFocusable(false);
-*/
-
                 return true;
-
+            case R.id.settings_menu_item:
+                Intent toSettingsIntent = new Intent(this, Galeria1Activity.class);
+                context.startActivity(toSettingsIntent);
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -311,6 +257,10 @@ public class MainActivity extends AppCompatActivity {
 
     public void setChosenObject(Object object) {
         this.chosenObject = object;
+    }
+
+    public Context getContext() {
+        return this;
     }
 
 

@@ -15,16 +15,16 @@ import com.google.android.material.snackbar.Snackbar;
 import java.util.Arrays;
 import java.util.List;
 
-public class GalleryScrolling extends AppCompatActivity {
+public class Galeria1Activity extends AppCompatActivity {
     private RecyclerView galleryRecycler;
-    private GalleryListAdapter adapter;
+    private Galeria1Adapter adapter;
 
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_gallery_scrolling);
+        setContentView(R.layout.activity_galeria1);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -38,7 +38,7 @@ public class GalleryScrolling extends AppCompatActivity {
 
 
         galleryRecycler.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new GalleryListAdapter(this, galleryList);
+        adapter = new Galeria1Adapter(this, galleryList);
         galleryRecycler.setAdapter(adapter);
 
 

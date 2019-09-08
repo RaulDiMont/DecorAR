@@ -20,10 +20,10 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class SecondGalleryActivity extends AppCompatActivity {
+public class Galeria2Activity extends AppCompatActivity {
 
     private RecyclerView imageGalleryRecyclerView;
-    private SecondGalleryAdapter adapter;
+    private Galeria2Adapter adapter;
     private List<Object> listaObjetos;
     private Gson gson;
     private String modelType;
@@ -31,7 +31,7 @@ public class SecondGalleryActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_second_gallery);
+        setContentView(R.layout.activity_galeria2);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -77,7 +77,7 @@ public class SecondGalleryActivity extends AppCompatActivity {
         imageGalleryRecyclerView.setLayoutManager(new GridLayoutManager(this, 3));
         imageGalleryRecyclerView.setHasFixedSize(true);
 
-        adapter = new SecondGalleryAdapter(this, selectedObjects);
+        adapter = new Galeria2Adapter(this, selectedObjects);
         imageGalleryRecyclerView.setAdapter(adapter);
 
 
