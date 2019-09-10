@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.ar.core.Anchor;
 import com.google.ar.core.HitResult;
 import com.google.ar.core.Plane;
@@ -46,9 +47,11 @@ public class MainActivity extends AppCompatActivity {
     private ArFragment fragment;
     private ModelLoader modelLoader;
     private Object chosenObject;
+    private AnchorNode chosenNode;
     private Uri previewUri;
     private Session arSession;
     Toolbar toolbar;
+    private FloatingActionButton deleteButton;
 
     //Primera galería
     private RecyclerView galleryRecycler;
@@ -61,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
     private List<Object> listaObjetos;
 
     private Gson gson;
+    String localFileName = "_ModelList.json";
 
 
     @Override
@@ -71,8 +75,10 @@ public class MainActivity extends AppCompatActivity {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
         setContentView(R.layout.activity_main);
         toolbar = findViewById(R.id.toolbar);
+        toolbar.setTitle("Decor[AR]");
+        deleteButton = findViewById(R.id.deleteNode_button);
 
-
+        deleteButton.hide();
 
         setSupportActionBar(toolbar);
         toolbar.setBackgroundColor(getColor(android.R.color.transparent));
@@ -101,7 +107,10 @@ public class MainActivity extends AppCompatActivity {
         fragment.setOnTapArPlaneListener(
                 (HitResult hitResult, Plane plane, MotionEvent motionEvent) -> {
                     if (chosenObject == null) {
-                        Toast.makeText(MainActivity.this, "Primero seleccione un objeto de la galería", Toast.LENGTH_LONG).show();
+                        chosenNode = null;
+                        deleteButton.hide();
+                        Toast.makeText(MainActivity.this, "Seleccione un objeto de la galería", Toast.LENGTH_LONG).show();
+
                         return;
                     }
 
@@ -109,17 +118,33 @@ public class MainActivity extends AppCompatActivity {
                     previewUri = Uri.parse(chosenObject.getFilepath());
 
                     modelLoader.render3DModel(hitResult.createAnchor(), previewUri);
+
                 });
+
 
     }
 
     public void addNodeToScene(Anchor anchor, ModelRenderable renderable) {
         AnchorNode anchorNode = new AnchorNode(anchor);
+        chosenNode = anchorNode;
+        deleteButton.show();
         TransformableNode node = new TransformableNode(fragment.getTransformationSystem());
         node.setRenderable(renderable);
         node.setParent(anchorNode);
+        node.setName(chosenObject.getNombre());
+
+        node.setOnTapListener((v, event) -> {
+            chosenNode = anchorNode;
+            deleteButton.show();
+        });
+
+
+
+
+
         fragment.getArSceneView().getScene().addChild(anchorNode);
         node.select();
+        setChosenObject(null);
     }
 
     public void onClickToGallery(View view) {
@@ -127,9 +152,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void toGallery1() {
+        deleteButton.hide();
 
         //Flecha atrás de la toolbar
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toolbar.setTitle("Elige decoración");
         toolbar.setBackgroundColor(getColor(R.color.colorPrimaryDark));
         //Galeria 1
         galleryRecycler.setVisibility(View.VISIBLE);
@@ -144,7 +171,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void toGallery2() {
+
         toolbar.setBackgroundColor(getColor(R.color.colorPrimaryDark));
+        toolbar.setTitle("Elige un objeto");
         //Galeria 1
         galleryRecycler.setVisibility(View.INVISIBLE);
         galleryRecycler.setFocusable(false);
@@ -160,6 +189,7 @@ public class MainActivity extends AppCompatActivity {
     public void toFragmentAR() {
 
         toolbar.setBackgroundColor(getColor(android.R.color.transparent));
+        toolbar.setTitle("Decor[AR]");
         //Galeria 1
         galleryRecycler.setVisibility(View.INVISIBLE);
         galleryRecycler.setFocusable(false);
@@ -173,14 +203,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void fromJSONtoList() {
+
         gson = new Gson();
 
         Type listaObjetosType = new TypeToken<List<Object>>() {
         }.getType();
 
         try {
-            InputStream stream = getAssets().open("_ModelList.json");
+            InputStream stream = openFileInput(localFileName);
             InputStreamReader reader = new InputStreamReader(stream);
+
 
             listaObjetos = gson.fromJson(reader, listaObjetosType);
         } catch (
@@ -188,6 +220,7 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this, "No se ha podido leer _ModelList.json", Toast.LENGTH_SHORT)
                     .show();
         }
+
     }
 
     public void inicializarGaleria1() {
@@ -263,5 +296,12 @@ public class MainActivity extends AppCompatActivity {
         return this;
     }
 
-
+    public void deleteNode(View view) {
+        if (chosenNode.getAnchor() != null) {
+            fragment.getArSceneView().getScene().removeChild(chosenNode);
+            chosenNode.getAnchor().detach();
+            chosenNode.setParent(null);
+            deleteButton.hide();
+        }
+    }
 }

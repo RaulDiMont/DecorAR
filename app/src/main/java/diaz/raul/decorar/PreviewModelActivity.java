@@ -2,8 +2,11 @@ package diaz.raul.decorar;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -37,8 +40,14 @@ public class PreviewModelActivity extends AppCompatActivity implements Scene.OnU
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().requestFeature(Window.FEATURE_ACTION_BAR_OVERLAY);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
         setContentView(R.layout.activity_previewmodel);
+
         Toolbar toolbar = findViewById(R.id.toolbar);
+
+        toolbar.setTitle("Previsualización");
         setSupportActionBar(toolbar);
 
         //Añadimos la función de back en la toolbar por comodidad
@@ -53,6 +62,7 @@ public class PreviewModelActivity extends AppCompatActivity implements Scene.OnU
 
         //Inicializamos las variables con las views e items del layout
         previewSceneView = findViewById(R.id.scene_view);
+        previewSceneView.setBackgroundColor(getColor(R.color.colorPrimaryLight));
         nameTextView = findViewById(R.id.nameTextView);
         previewScene = previewSceneView.getScene();
         Camera camera = previewScene.getCamera();
@@ -82,6 +92,7 @@ public class PreviewModelActivity extends AppCompatActivity implements Scene.OnU
         modelLoader = new ModelLoader(new WeakReference<>(this), null);
         modelLoader.render3DModel(previewUri);
         nameTextView.setText(chosenObject.getNombre());
+        nameTextView.setBackgroundColor(getColor(R.color.colorPrimary));
     }
 
     //En el método setNodeOnScene creamos el nodo que utilizaremos para crear el renderizable

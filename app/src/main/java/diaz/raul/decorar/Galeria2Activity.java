@@ -33,6 +33,7 @@ public class Galeria2Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_galeria2);
         Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar.setTitle("Galería");
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

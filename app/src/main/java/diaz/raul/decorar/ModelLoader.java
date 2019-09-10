@@ -49,7 +49,7 @@ public class ModelLoader {
 
     void render3DModel(Anchor anchor, Uri uri) {
         if (ownerMain.get() == null) {
-            Log.d("ModelLoader", "Activity is null.  Cannot load model.");
+            Log.d("ModelLoader", "Actividad nula. No se puede cargar el modelo");
             return;
         }
         Context context = ownerMain.get();

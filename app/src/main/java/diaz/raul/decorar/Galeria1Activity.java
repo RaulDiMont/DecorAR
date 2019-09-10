@@ -2,6 +2,7 @@ package diaz.raul.decorar;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -26,6 +27,8 @@ public class Galeria1Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_galeria1);
         Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar.setTitle("Galería");
+
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -42,8 +45,6 @@ public class Galeria1Activity extends AppCompatActivity {
         galleryRecycler.setAdapter(adapter);
 
 
-
-
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,5 +54,17 @@ public class Galeria1Activity extends AppCompatActivity {
             }
         });
 
+
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
