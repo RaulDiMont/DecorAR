@@ -6,16 +6,26 @@ import java.io.Serializable;
 //sencilla con Intents
 
 public class Object implements Serializable {
-    private String filePath, iconPath, nombre, escalable, tipo, superficie;
+    private String filePath, onlineFilePath, iconPath, onlineIconPath, nombre, escalable, tipo, superficie;
 
     //Obtenemos la ruta del fichero.sfb
-    public String getFilepath() {
+    public String getFilePath() {
         return filePath;
     }
 
-    //Obtenemos la ruta del thumbnail que aparecerá en la Secondgallery
+    //Obtenemos la ruta del fichero .sfb en la BBDD de firebase
+    public String getOnlineFilePath() {
+        return onlineFilePath;
+    }
+
+    //Obtenemos la ruta del thumbnail del objeto
     public String getIconpath() {
         return iconPath;
+    }
+
+    //Obtenemos la ruta del thumbnail en la BBDD de firebase
+    public String getOnlineIconPath() {
+        return onlineIconPath;
     }
 
     //Obtenemos el nombre asignado al objeto
@@ -38,4 +48,6 @@ public class Object implements Serializable {
     public String getSuperficie() {
         return superficie;
     }
+
+
 }

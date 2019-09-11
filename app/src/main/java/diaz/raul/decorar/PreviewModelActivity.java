@@ -58,7 +58,7 @@ public class PreviewModelActivity extends AppCompatActivity implements Scene.OnU
         chosenObject = (Object) intent.getSerializableExtra("objeto_seleccionado");
 
         //Obtenemos la URI del fichero .sfb del modelo que se mostrará en la escena
-        previewUri = Uri.parse(chosenObject.getFilepath());
+        previewUri = Uri.parse(chosenObject.getFilePath());
 
         //Inicializamos las variables con las views e items del layout
         previewSceneView = findViewById(R.id.scene_view);
@@ -71,7 +71,7 @@ public class PreviewModelActivity extends AppCompatActivity implements Scene.OnU
         previewScene.addOnUpdateListener(this::onUpdate);
 
         //Establecemos la posición de la cámara en función del objeto a representar
-        switch (chosenObject.getFilepath()) {
+        switch (chosenObject.getFilePath()) {
             case "chair_1.sfb":
                 camera.setLocalRotation(Quaternion.axisAngle(Vector3.left(), 20.0f));
                 previewNode.setName("Silla de comedor");
@@ -103,7 +103,7 @@ public class PreviewModelActivity extends AppCompatActivity implements Scene.OnU
 
         //Establecemos la posición del nodo en la escena en función del objetoa representar
 
-        switch (chosenObject.getFilepath()) {
+        switch (chosenObject.getFilePath()) {
             case "chair_1.sfb":
                 previewNode.setLocalPosition(new Vector3(0f, -2.5f, -3.5f));
                 previewNode.setLocalScale(new Vector3(2.7f, 2.7f, 2.7f));
@@ -136,7 +136,7 @@ public class PreviewModelActivity extends AppCompatActivity implements Scene.OnU
         vectorRotacion = vectorRotacion + 0.3f;
 
         //Establecemos la forma en la que rota el modelo en en función del modelo que se está representando
-        switch (chosenObject.getFilepath()) {
+        switch (chosenObject.getFilePath()) {
             case "chair_1.sfb":
                 previewNode.setLocalRotation(Quaternion.eulerAngles(new Vector3(0, vectorRotacion, 0)));
                 break;

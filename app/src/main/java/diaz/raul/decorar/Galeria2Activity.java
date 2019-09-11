@@ -27,6 +27,7 @@ public class Galeria2Activity extends AppCompatActivity {
     private List<Object> listaObjetos;
     private Gson gson;
     private String modelType;
+    private String localFileName = "_ModelList.json";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +50,7 @@ public class Galeria2Activity extends AppCompatActivity {
         }.getType();
 
         try {
-            InputStream stream = getAssets().open("_ModelList.json");
+            InputStream stream = openFileInput(localFileName);
             InputStreamReader reader = new InputStreamReader(stream);
 
             listaObjetos = gson.fromJson(reader, listaObjetosType);

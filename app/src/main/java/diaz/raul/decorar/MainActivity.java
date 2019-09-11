@@ -52,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
     private Session arSession;
     Toolbar toolbar;
     private FloatingActionButton deleteButton;
+    private FloatingActionButton galleryButton;
 
     //Primera galería
     private RecyclerView galleryRecycler;
@@ -77,12 +78,15 @@ public class MainActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle("Decor[AR]");
         deleteButton = findViewById(R.id.deleteNode_button);
+        galleryButton = findViewById(R.id.to_gallery_button);
+        galleryButton.show();
 
         deleteButton.hide();
 
         setSupportActionBar(toolbar);
         toolbar.setBackgroundColor(getColor(android.R.color.transparent));
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+
 
         fromJSONtoList();
 
@@ -115,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                     //Obtenemos la URI del fichero .sfb del modelo que se mostrará en la escena
-                    previewUri = Uri.parse(chosenObject.getFilepath());
+                    previewUri = Uri.parse(chosenObject.getFilePath());
 
                     modelLoader.render3DModel(hitResult.createAnchor(), previewUri);
 
@@ -123,6 +127,14 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        galleryButton.show();
+        fromJSONtoList();
+    }
+
 
     public void addNodeToScene(Anchor anchor, ModelRenderable renderable) {
         AnchorNode anchorNode = new AnchorNode(anchor);
@@ -212,13 +224,11 @@ public class MainActivity extends AppCompatActivity {
         try {
             InputStream stream = openFileInput(localFileName);
             InputStreamReader reader = new InputStreamReader(stream);
-
-
             listaObjetos = gson.fromJson(reader, listaObjetosType);
         } catch (
                 IOException e) {
-            Toast.makeText(this, "No se ha podido leer _ModelList.json", Toast.LENGTH_SHORT)
-                    .show();
+            Toast.makeText(this, "Por favor, sincronice datos desde Configuracion", Toast.LENGTH_LONG).show();
+            galleryButton.hide();
         }
 
     }

@@ -19,13 +19,18 @@ import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.lang.reflect.Type;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 
 public class SettingsActivity extends AppCompatActivity {
@@ -48,6 +53,7 @@ public class SettingsActivity extends AppCompatActivity {
     StorageReference modelsStorageRef = storage.getReferenceFromUrl("gs://decorar-bb01c.appspot.com/Modelos");
     StorageReference jsonStorageRef = storage.getReferenceFromUrl("gs://decorar-bb01c.appspot.com").child("_ModelList.json");
 
+    private Gson gson;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,9 +96,11 @@ public class SettingsActivity extends AppCompatActivity {
     public void sincronizar(View view) {
         Toast.makeText(this, "Sincronizando con la nube...", Toast.LENGTH_LONG).show();
         fromJSONtoList();
+        actualizarJSON();
+
     }
 
-    public void fromJSONtoList() {
+    public void actualizarJSON() {
 
         //actualizamos JSON
         File localFile = new File(getFilesDir(), localFileName);
@@ -106,6 +114,10 @@ public class SettingsActivity extends AppCompatActivity {
 
                         //readWriteJson();
                         Toast.makeText(context, "Se ha actualizado el archivo " + localFileName, Toast.LENGTH_SHORT).show();
+
+                        //Actualizamos los modelos e imagenes si el JSON se ha actualizado correctamente
+                        actualizarModelos();
+                        actualizarImagenes();
                     }
                 }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -114,28 +126,75 @@ public class SettingsActivity extends AppCompatActivity {
                 Toast.makeText(context, "No se ha podido descargar el .json " + localFileName, Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    public void actualizarModelos() {
+
 
         //actualizamos modelos
-        File imagesDirectory = new File(getFilesDir(), localImageDirName);
-        String newID = imagesDirectory.getAbsolutePath();
+        Iterator<Object> iterator = listaObjetos.iterator();
+        while (iterator.hasNext()) {
+            Object next = iterator.next();
+            File modelsFolder = new File(getFilesDir() + File.separator + "Modelos");
 
-        imagesStorageRef.getFile(imagesDirectory)
-                .addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
-                    @Override
-                    public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
-                        // Successfully downloaded data to local file
-
-                        Toast.makeText(context, "Se ha actualizado las imagenes ", Toast.LENGTH_SHORT).show();
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception exception) {
-                // Handle failed download
-                Toast.makeText(context, "No se ha podido actualizar las imagenes", Toast.LENGTH_SHORT).show();
+            if (!modelsFolder.exists()) {
+                modelsFolder.mkdir();
             }
-        });
+
+            File modelFile = new File(modelsFolder, next.getFilePath());
+            String newID = modelFile.getAbsolutePath();
+
+            StorageReference modelStorageRef = storage.getReferenceFromUrl(next.getOnlineFilePath());
+            modelStorageRef.getFile(modelFile)
+                    .addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                            // Successfully downloaded data to local file
+                            Toast.makeText(context, "Se han actualizado los modelos", Toast.LENGTH_LONG).show();
+
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    // Handle failed download
+                    Toast.makeText(context, "No se han podido actualizar los modelos", Toast.LENGTH_LONG).show();
+                }
+            });
+        }
+    }
+
+    public void actualizarImagenes() {
 
 
+        //actualizamos modelos
+        Iterator<Object> iterator = listaObjetos.iterator();
+        while (iterator.hasNext()) {
+            Object next = iterator.next();
+            File imagesFolder = new File(getFilesDir() + File.separator + "Imagenes");
+
+            if (!imagesFolder.exists()) {
+                imagesFolder.mkdir();
+            }
+
+            File imageFile = new File(imagesFolder, next.getIconpath());
+            String newID = imageFile.getAbsolutePath();
+
+            StorageReference imageStorageRef = storage.getReferenceFromUrl(next.getOnlineIconPath());
+            imageStorageRef.getFile(imageFile)
+                    .addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                            // Successfully downloaded data to local file
+                            Toast.makeText(context, "Se han actualizado los thumbnails", Toast.LENGTH_LONG).show();
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    // Handle failed download
+                    Toast.makeText(context, "No se han podido actualizar los thumbnails", Toast.LENGTH_LONG).show();
+                }
+            });
+        }
     }
 
     public void readWriteJson() {
@@ -159,6 +218,25 @@ public class SettingsActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
+
+    }
+
+    public void fromJSONtoList() {
+
+        gson = new Gson();
+
+        Type listaObjetosType = new TypeToken<List<Object>>() {
+        }.getType();
+
+        try {
+            InputStream stream = openFileInput(localFileName);
+            InputStreamReader reader = new InputStreamReader(stream);
+            listaObjetos = gson.fromJson(reader, listaObjetosType);
+        } catch (
+                IOException e) {
+            Toast.makeText(this, "Error al pasar de JSON a lista de objetos", Toast.LENGTH_LONG).show();
+
+        }
 
     }
 }

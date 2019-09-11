@@ -11,6 +11,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 
+import java.io.File;
+
 public class Galeria2ViewHolder extends RecyclerView.ViewHolder {
 
     private ImageView imageItem;
@@ -27,7 +29,7 @@ public class Galeria2ViewHolder extends RecyclerView.ViewHolder {
 
     public void bind(Object selectedObject, Context context) {
         //Obtenemos la ubicación del fichero de la imagen para mostrarla con Glide
-        String path = selectedObject.getIconpath();
+        String path = context.getFilesDir() + File.separator + "Imagenes" + File.separator + selectedObject.getIconpath();
 
         Glide.with(context)
                 .load(path)
