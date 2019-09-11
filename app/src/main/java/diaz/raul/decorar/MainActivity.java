@@ -43,14 +43,13 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Context context;
     private ArFragment fragment;
     private ModelLoader modelLoader;
     private Object chosenObject;
     private AnchorNode chosenNode;
     private Uri previewUri;
     private Session arSession;
-    Toolbar toolbar;
+    public Toolbar toolbar;
     private FloatingActionButton deleteButton;
     private FloatingActionButton galleryButton;
 
@@ -118,11 +117,37 @@ public class MainActivity extends AppCompatActivity {
                         return;
                     }
 
-                    //Obtenemos la URI del fichero .sfb del modelo que se mostrará en la escena
-                    previewUri = Uri.parse(chosenObject.getFilePath());
+                    switch (chosenObject.getSuperficie()) {
+                        case "Techo":
+                            if (plane.getType().equals(Plane.Type.HORIZONTAL_DOWNWARD_FACING)) {
+                                //Obtenemos la URI del fichero .sfb del modelo que se mostrará en la escena
+                                previewUri = Uri.parse(chosenObject.getFilePath());
+                                //Posicionamos el modelo renderizano en la escena
+                                modelLoader.render3DModel(hitResult.createAnchor(), previewUri);
+                            } else
+                                Toast.makeText(this, "El objeto " + chosenObject.getNombre() + " solo puede situarse en el techo", Toast.LENGTH_LONG).show();
+                            break;
+                        case "Suelo":
+                            if (plane.getType().equals(Plane.Type.HORIZONTAL_UPWARD_FACING)) {
+                                //Obtenemos la URI del fichero .sfb del modelo que se mostrará en la escena
+                                previewUri = Uri.parse(chosenObject.getFilePath());
+                                //Posicionamos el modelo renderizano en la escena
+                                modelLoader.render3DModel(hitResult.createAnchor(), previewUri);
+                            } else
+                                Toast.makeText(this, "El objeto " + chosenObject.getNombre() + " solo puede situarse en el suelo", Toast.LENGTH_LONG).show();
 
-                    modelLoader.render3DModel(hitResult.createAnchor(), previewUri);
+                            break;
+                        case "Pared":
+                            if (plane.getType().equals(Plane.Type.VERTICAL)) {
+                                //Obtenemos la URI del fichero .sfb del modelo que se mostrará en la escena
+                                previewUri = Uri.parse(chosenObject.getFilePath());
+                                //Posicionamos el modelo renderizano en la escena
+                                modelLoader.render3DModel(hitResult.createAnchor(), previewUri);
+                            } else
+                                Toast.makeText(this, "El objeto " + chosenObject.getNombre() + " solo puede situarse en la pared", Toast.LENGTH_LONG).show();
 
+                            break;
+                    }
                 });
 
 
@@ -149,11 +174,6 @@ public class MainActivity extends AppCompatActivity {
             chosenNode = anchorNode;
             deleteButton.show();
         });
-
-
-
-
-
         fragment.getArSceneView().getScene().addChild(anchorNode);
         node.select();
         setChosenObject(null);
@@ -304,6 +324,10 @@ public class MainActivity extends AppCompatActivity {
 
     public Context getContext() {
         return this;
+    }
+
+    public Session getArSession() {
+        return arSession;
     }
 
     public void deleteNode(View view) {
