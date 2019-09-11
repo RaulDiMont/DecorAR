@@ -1,11 +1,13 @@
 package diaz.raul.decorar;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -84,6 +86,27 @@ public class Galeria2ViewHolder extends RecyclerView.ViewHolder {
 
     public void onItemLongClick(Object selectedObject) {
 
+        new AlertDialog.Builder(context)
+                .setTitle("Eliminar modelo")
+                .setMessage("¿Desea eliminar este modelo?")
+
+                // Specifying a listener allows you to take an action before dismissing the dialog.
+                // The dialog is automatically dismissed when a dialog button is clicked.
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Continue with delete operation
+                        if (context instanceof Galeria2Activity) {
+                            Galeria2Activity galeria2 = (Galeria2Activity) context;
+                            galeria2.actualizarGaleria(selectedObject);
+                        }
+
+                    }
+                })
+
+                // A null listener allows the button to dismiss the dialog and take no further action.
+                .setNegativeButton(android.R.string.no, null)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
 
     }
 }

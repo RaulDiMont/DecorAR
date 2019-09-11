@@ -37,20 +37,13 @@ public class SettingsActivity extends AppCompatActivity {
 
     private RecyclerView listRecycler;
     private RecyclerListAdapter adapter;
-    private Gson gsonIn;
-    private Gson gsonOut;
+
     private List<Object> listaObjetos;
     private Context context;
-    File tempFile = null;
-    String tempFileName = "_tempModelList";
-    String localFileName = "_ModelList.json";
-    String localModelDirName = "Models";
-    String localImageDirName = "Images";
 
+    String localFileName = "_ModelList.json";
 
     FirebaseStorage storage = FirebaseStorage.getInstance();
-    StorageReference imagesStorageRef = storage.getReferenceFromUrl("gs://decorar-bb01c.appspot.com/Imagenes");
-    StorageReference modelsStorageRef = storage.getReferenceFromUrl("gs://decorar-bb01c.appspot.com/Modelos");
     StorageReference jsonStorageRef = storage.getReferenceFromUrl("gs://decorar-bb01c.appspot.com").child("_ModelList.json");
 
     private Gson gson;
